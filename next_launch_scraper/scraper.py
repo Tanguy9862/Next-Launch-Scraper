@@ -13,7 +13,7 @@ logging.basicConfig(level=logging.INFO)
 
 def scrape_next_launch_data():
 
-    logging.info(f'{SCRIPT_NAME} - Search for upcoming launch data..')
+    logging.info(f'{SCRIPT_NAME} - Searching for upcoming launch data..')
 
     def make_soup(url):
         response = requests.get(url)
