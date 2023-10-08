@@ -66,6 +66,7 @@ def scrape_next_launch_data():
         price = None
 
     # GET NUMBER MISSION TOTAL AND NUMBER MISSION YEAR
+    main_break = False
     for title in all_h3:
         if 'Stats' in title:
             subtitles_stat = title.find_all_next('h4', class_='mdl-card__title-text')
@@ -80,7 +81,10 @@ def scrape_next_launch_data():
                                 re.match(regex, all_desc_stats[0].text) and re.match(regex, all_desc_stats[0].text).group(1),
                                 re.match(regex, all_desc_stats[1].text) and re.match(regex, all_desc_stats[1].text).group(1),
                             )
+                            main_break = True
                             break
+            if main_break:
+                break
     else:
         total_mission, total_mission_year = None, None
 
