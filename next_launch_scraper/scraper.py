@@ -102,7 +102,9 @@ def scrape_next_launch_data():
             'TOTAL MISSION YEAR': total_mission_year
         }
     )
-    with open(fr'{PATH_TO_EXPORT}/{DATA_FILENAME}', 'w', encoding='utf-8') as json_file:
-        json.dump(next_launch_data, json_file, ensure_ascii=False, indent=4)
+    # with open(fr'{PATH_TO_EXPORT}/{DATA_FILENAME}', 'w', encoding='utf-8') as json_file:
+    #     json.dump(next_launch_data, json_file, ensure_ascii=False, indent=4)
 
     logging.info(f'{SCRIPT_NAME} - {DATA_FILENAME} updated!')
+
+    return next_launch_data
