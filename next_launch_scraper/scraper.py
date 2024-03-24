@@ -32,7 +32,9 @@ def scrape_next_launch_data():
     regex_image_link = re.search(r'url\((.*)\)', card.select_one('style').text).group(1)
     image_link = regex_image_link if regex_image_link != default_image_link else None
 
-    details_link = card.find_all('button')[0].get('onclick').split("'")[1]
+    details_link = card.find_all('a')[0].get('href')
+    # details_link = card.find_all('button')[0].get('onclick').split("'")[1]
+
     try:
         video_link = re.search(r"'(https://?\S+)'", card.find_all('button')[1].get('onclick')).group(1)
     except (IndexError, AttributeError):
