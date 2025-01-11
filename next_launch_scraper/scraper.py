@@ -4,23 +4,26 @@ import logging
 import re
 import requests
 
-PATH_TO_EXPORT = 'data'
-DATA_FILENAME = "next_launch_data.json"
-SCRIPT_NAME = 'Next_Launch_Scraper'
+from .config import CONFIG
+from .utils import export_data_to_json
+
+# PATH_TO_EXPORT = 'data'
+# DATA_FILENAME = "next_launch_data.json"
+# SCRIPT_NAME = 'Next_Launch_Scraper'
 
 logging.basicConfig(level=logging.INFO)
 
 
 def scrape_next_launch_data():
 
-    logging.info(f'{SCRIPT_NAME} - Searching for upcoming launch data..')
+    logging.info(f'{CONFIG.SCRIPT_NAME} - Searching for upcoming launch data..')
 
     def make_soup(url):
         response = requests.get(url)
         return BeautifulSoup(response.text, 'html.parser')
 
     # MAIN PAGE:
-    card = make_soup('https://nextspaceflight.com/launches/?search=').select_one('div.mdl-cell')  # UPCOMING
+    card = make_soup(CONFIG.URL_UPCOMING_LAUNCH).select_one('div.mdl-cell')  # UPCOMING
     # card = make_soup('https://nextspaceflight.com/launches/past/?search=').select_one('div.mdl-cell')  # PAST
     next_launch_data = []
 
@@ -107,6 +110,14 @@ def scrape_next_launch_data():
     # with open(fr'{PATH_TO_EXPORT}/{DATA_FILENAME}', 'w', encoding='utf-8') as json_file:
     #     json.dump(next_launch_data, json_file, ensure_ascii=False, indent=4)
 
-    logging.info(f'{SCRIPT_NAME} - {DATA_FILENAME} updated!')
+    # logging.info(f'{CONFIG.SCRIPT_NAME} - {DATA_FILENAME} updated!')
+
+    # EXPORT NEW DATA
+    print(next_launch_data)
+
+    export_data_to_json(next_launch_data)
+
+    # with open('data/next_launch.json', 'w', encoding='utf-8') as json_file:
+    #     json.dump(next_launch_data, json_file, ensure_ascii=False, indent=4)
 
     return next_launch_data
