@@ -4,19 +4,15 @@ import logging
 import re
 import requests
 
-from .config import CONFIG
-from .utils import export_data_to_json
-
-# PATH_TO_EXPORT = 'data'
-# DATA_FILENAME = "next_launch_data.json"
-# SCRIPT_NAME = 'Next_Launch_Scraper'
+from .config import CONFIG, LocalConfig, ENV
+from .utils import export_data_to_json, export_data_to_s3
 
 logging.basicConfig(level=logging.INFO)
 
 
 def scrape_next_launch_data():
 
-    logging.info(f'{CONFIG.SCRIPT_NAME} - Searching for upcoming launch data..')
+    logging.info(f'[{ENV}] {CONFIG.SCRIPT_NAME} - Searching for upcoming launch data..')
 
     def make_soup(url):
         response = requests.get(url)
@@ -107,17 +103,11 @@ def scrape_next_launch_data():
             'TOTAL MISSION YEAR': total_mission_year
         }
     )
-    # with open(fr'{PATH_TO_EXPORT}/{DATA_FILENAME}', 'w', encoding='utf-8') as json_file:
-    #     json.dump(next_launch_data, json_file, ensure_ascii=False, indent=4)
 
-    # logging.info(f'{CONFIG.SCRIPT_NAME} - {DATA_FILENAME} updated!')
-
-    # EXPORT NEW DATA
-    # print(next_launch_data)
-
-    export_data_to_json(next_launch_data)
-
-    # with open('data/next_launch.json', 'w', encoding='utf-8') as json_file:
-    #     json.dump(next_launch_data, json_file, ensure_ascii=False, indent=4)
+    if isinstance(CONFIG, LocalConfig):
+        export_data_to_json(next_launch_data)
+    else:
+        export_data_to_s3(next_launch_data)
 
     return next_launch_data
+

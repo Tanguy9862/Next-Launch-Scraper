@@ -1,11 +1,13 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='Next_Launch_Space_Scraper',
-    version='0.1',
+    name='nsf_next_launch_scraper',
+    version='0.2',
     packages=find_packages(),
     install_requires=[
         'bs4',
         'requests',
+        'python-dotenv',
+        'boto3'
     ]
 )
