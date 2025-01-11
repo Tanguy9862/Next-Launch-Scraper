@@ -14,11 +14,10 @@ from .config import CONFIG
 
 
 def export_data_to_json(updated_data):
-    export_dir = Path(CONFIG.DATA_DIR_NAME)
 
-    if not export_dir.is_absolute():
-        export_dir = Path(__file__).resolve().parent / export_dir
-
+    # Set export directory and file path, creating the directory if needed.
+    current_dir = Path.cwd()
+    export_dir = current_dir / CONFIG.DATA_DIR_NAME
     export_dir.mkdir(parents=True, exist_ok=True)
     export_file = export_dir / CONFIG.DATA_EXPORT_FILENAME
 

@@ -113,7 +113,7 @@ def scrape_next_launch_data():
     # logging.info(f'{CONFIG.SCRIPT_NAME} - {DATA_FILENAME} updated!')
 
     # EXPORT NEW DATA
-    print(next_launch_data)
+    # print(next_launch_data)
 
     export_data_to_json(next_launch_data)
 
