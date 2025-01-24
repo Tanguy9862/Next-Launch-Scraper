@@ -1,2 +1,4 @@
 venv/
 .env
+main.py
+spacexploration-gcp-bucket-access.json

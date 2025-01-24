@@ -4,8 +4,8 @@ import logging
 import re
 import requests
 
-from .config import CONFIG, LocalConfig, ENV
-from .utils import export_data_to_json, export_data_to_s3
+from .config import CONFIG, LocalConfig, AWSConfig, GCPConfig, ENV
+from .utils import export_data_to_json, export_data_to_s3, export_data_to_gcp
 
 logging.basicConfig(level=logging.INFO)
 
@@ -106,8 +106,10 @@ def scrape_next_launch_data():
 
     if isinstance(CONFIG, LocalConfig):
         export_data_to_json(next_launch_data)
-    else:
+    elif isinstance(CONFIG, AWSConfig):
         export_data_to_s3(next_launch_data)
+    elif isinstance(CONFIG, GCPConfig):
+        export_data_to_gcp(next_launch_data)
 
     return next_launch_data
 

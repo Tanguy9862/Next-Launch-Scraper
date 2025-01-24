@@ -4,6 +4,11 @@ import os
 
 env_path = Path.cwd() / ".env"
 load_dotenv(dotenv_path=env_path)
+ENV = os.getenv("ENV", "local")
+
+
+# Only for if you want to access to your Cloud Storage from Local
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = 'spacexploration-gcp-bucket-access.json' or None
 
 
 class BaseConfig:
@@ -16,9 +21,22 @@ class LocalConfig(BaseConfig):
     DATA_DIR_NAME = 'data'
 
 
-class LambdaConfig(BaseConfig):
+class AWSConfig(BaseConfig):
     BUCKET_NAME = "app-space-exploration-bucket"
 
 
-ENV = os.getenv("ENV", "local")
-CONFIG = LocalConfig() if ENV == "local" else LambdaConfig()
+class GCPConfig(BaseConfig):
+    BUCKET_NAME = 'space-exploration-bucket-test'
+
+
+def get_config():
+    if ENV == "local":
+        return LocalConfig()
+    elif ENV == 'aws':
+        return AWSConfig()
+    elif ENV == 'gcp':
+        return GCPConfig()
+    return LocalConfig()
+
+
+CONFIG = get_config()

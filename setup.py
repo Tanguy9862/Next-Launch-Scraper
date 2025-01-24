@@ -8,6 +8,7 @@ setup(
         'bs4',
         'requests',
         'python-dotenv',
-        'boto3'
+        'boto3',
+        'google-cloud-storage'
     ]
 )
