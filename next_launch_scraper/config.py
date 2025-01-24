@@ -8,7 +8,7 @@ ENV = os.getenv("ENV", "local")
 
 
 # Only for if you want to access to your Cloud Storage from Local
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = 'spacexploration-gcp-bucket-access.json' or None
+# os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = 'spacexploration-gcp-bucket-access.json' or None
 
 
 class BaseConfig:
