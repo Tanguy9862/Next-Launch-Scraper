@@ -1,49 +1,66 @@
-# Next-Launch-Scraper
+# NextSpaceFlight Next Launch Scraper
 
-## Overview
+**NSF Next Launch Scraper** is a Python package designed to scrape and export the latest upcoming space launch data from [Next Spaceflight](https://nextspaceflight.com/). It supports exporting data **locally** or to an **AWS S3 bucket**, making it flexible for various use cases.
 
-This Python package is designed to scrape real-time and upcoming space launch data. It is part of a larger project, [Space-App](https://github.com/Tanguy9862/Space-App), which visualizes various aspects of space exploration.
+---
 
 ## Features
 
-- **Real-Time Data**: Scrapes data about the next upcoming space launch, including the launch vehicle, launch site, mission details, live video, timing, etc.
-- **Detailed Information**: Provides comprehensive data such as the launch organization, rocket type, mission objectives, and cost.
-- **Data Transformation**: Transforms the scraped data into a JSON format for easy consumption.
-- **Error Handling**: Robust error handling to ensure data integrity.
-- **Logging**: Detailed logging for debugging and monitoring.
+- Scrapes detailed information about the next space launch:
+  - Date, Organization, Rocket, Mission Details, and more.
+- Supports **local export** *(JSON file)* and **AWS S3 integration**.
+- Easily configurable via environment variables (`ENV`).
+
+---
 
 ## Installation
 
-To install this package, run:
+Clone the repository and install the package:
 
 ```bash
 pip install git+https://github.com/Tanguy9862/Next-Launch-Scraper.git
 ```
 
+---
+
 ## Usage
 
-After installation, you can import the package and use the `scrape_next_launch_data()` function to scrape the data.
+### 1. Setup Configuration
+Create a `.env` file in the directory where you’ll run the scraper. Specify the environment:
 
-```python
-from next_launch_scraper import scraper
+- `ENV=local` (default): Export to a local JSON file.
+- `ENV=aws`: Export to an S3 bucket (requires proper IAM permissions).
 
-# Scrape next launch data
-scraper.scrape_next_launch_data()
+Example `.env`:
+
+```bash
+ENV=local
 ```
 
-## Dependencies
+### 2. Run the Scraper
+Import and call the main function:
 
-- Python 3.x
-- BeautifulSoup
-- Requests
-- Pandas
+```python
+from next_launch_scraper.scraper import scrape_next_launch_data
 
-## License
+scrape_next_launch_data()
+```
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+- **Local Mode**: Exports data to a `data/` folder in the current directory.
+- **AWS Mode**: Uploads the data to your specified S3 bucket (requires IAM setup).
 
-## Related Projects
+### 3. Example Integration
+This scraper can be seamlessly integrated into pipelines. See [Space-App](https://github.com/Tanguy9862/Space-App) for a practical example:
+- A Lambda function calls this scraper to update data in an S3 bucket.
+- The [Space-App](https://github.com/Tanguy9862/Space-App) consumes the data for visualization.
 
-- [Space-App](https://github.com/Tanguy9862/Space-App)
-- [Wikipedia_Space_Scraper](https://github.com/Tanguy9862/Wikipedia_Space_Scraper)
-- [NextSpaceFlight-Scrapper](https://github.com/Tanguy9862/NextSpaceFlight-Scrapper)
+---
+
+## AWS Integration
+
+If using `ENV=aws`, ensure:
+1. Your AWS credentials are configured in your environment or via `.aws/credentials`.
+2. The Lambda function or local user has appropriate permissions:
+   - `s3:PutObject`
+   - `s3:GetObject`
+
