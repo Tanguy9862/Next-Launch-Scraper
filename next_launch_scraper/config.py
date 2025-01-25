@@ -26,7 +26,7 @@ class AWSConfig(BaseConfig):
 
 
 class GCPConfig(BaseConfig):
-    BUCKET_NAME = 'space-exploration-bucket-test'
+    BUCKET_NAME = 'space-exploration-bucket'
 
 
 def get_config():
