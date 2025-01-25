@@ -1,6 +1,6 @@
 # NextSpaceFlight Next Launch Scraper
 
-**NSF Next Launch Scraper** is a Python package designed to scrape and export the latest upcoming space launch data from [Next Spaceflight](https://nextspaceflight.com/). It supports exporting data **locally** or to an **AWS S3 bucket**, making it flexible for various use cases.
+**NSF Next Launch Scraper** is a Python module designed to scrape and export the latest upcoming space launch data from [Next Spaceflight](https://nextspaceflight.com/).  It allows you to customize the environment (local, AWS, or GCP) and configure storage locations as needed, making it flexible for various use cases.
 
 ---
 
@@ -8,7 +8,7 @@
 
 - Scrapes detailed information about the next space launch:
   - Date, Organization, Rocket, Mission Details, and more.
-- Supports **local export** *(JSON file)* and **AWS S3 integration**.
+- Supports **local export** *(JSON file)* and **AWS S3, GCP Cloud Storage** integration.
 - Easily configurable via environment variables (`ENV`).
 
 ---
@@ -18,7 +18,8 @@
 Clone the repository and install the package:
 
 ```bash
-pip install git+https://github.com/Tanguy9862/Next-Launch-Scraper.git
+git clone git+https://github.com/Tanguy9862/Next-Launch-Scraper.git
+pip install -r requirements.txt
 ```
 
 ---
@@ -47,7 +48,7 @@ scrape_next_launch_data()
 ```
 
 - **Local Mode**: Exports data to a `data/` folder in the current directory.
-- **AWS Mode**: Uploads the data to your specified S3 bucket (requires IAM setup).
+- **AWS/GCP Mode**: Uploads the data to your specified S3/Cloud Storage bucket (requires IAM setup).
 
 ### 3. Example Integration
 This scraper can be seamlessly integrated into pipelines. See [Space-App](https://github.com/Tanguy9862/Space-App) for a practical example:
